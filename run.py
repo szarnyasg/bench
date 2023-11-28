@@ -3,7 +3,7 @@ import time
 import sys
 
 def benchmark(instance, out):
-    con = duckdb.connect("tpch-parquet.db")
+    con = duckdb.connect("tpch-sf100.db")
     con.load_extension("tpch")
     con.sql("CALL dbgen(sf = 100)")
 
