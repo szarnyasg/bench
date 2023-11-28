@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-if [ "${#}" -lt 2 ]; then
+if [ "${#}" -lt 1 ]; then
     echo "Usage: run.sh INSTANCE_TYPE"
     exit 1
 fi

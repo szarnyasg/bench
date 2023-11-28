@@ -3,7 +3,7 @@
 Create an EC2 instance with the following disk settings:
 
 * capacity: 200GB
-* type: gp2
+* type: gp3
 * IOPS: 3000
 
 1. Connect to the instance via SSH.
