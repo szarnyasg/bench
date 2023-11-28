@@ -18,7 +18,10 @@ dbExecute(con, "CREATE OR REPLACE TABLE aggregated AS
 aggregated <- dbGetQuery(con, "FROM aggregated")
 
 aggregated$instance <-
-  ordered(aggregated$instance, levels = c("c6i.8xl", "m6i.4xl", "c7a.8xl", "m7a.4xl", "c7g.8xl", "m7g.4xl"))
+  ordered(aggregated$instance, levels =
+            c("c6i.8xl", "m6i.4xl", "c7a.8xl",
+              "m7a.4xl", "c7g.8xl", "m7g.4xl",
+              "r7a.2xl", "r7g.2xl", "r7g.2xl"))
 
 ggplot(aggregated, aes(x=instance, y=time, fill=architecture, col=architecture)) +
   geom_col(position="dodge", width=0.75) +
