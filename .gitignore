@@ -1,3 +1,5 @@
 *.db*
 .Rproj.user
+.Rdata
+.Rhistory
 *.pdf

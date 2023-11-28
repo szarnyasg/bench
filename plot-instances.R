@@ -7,7 +7,7 @@ library(stringr)
 library(scales)
 library(duckdb)
 
-con <- dbConnect(duckdb())
+con <- dbConnect(duckdb("results.db"))
 dbExecute(con, "CREATE OR REPLACE TABLE results AS FROM 'results/*.csv'")
 dbExecute(con, "CREATE OR REPLACE TABLE aggregated AS
   SELECT
@@ -16,6 +16,9 @@ dbExecute(con, "CREATE OR REPLACE TABLE aggregated AS
     query,
     median(time) AS time FROM results GROUP BY ALL");
 aggregated <- dbGetQuery(con, "FROM aggregated")
+
+aggregated$instance <-
+  ordered(aggregated$instance, levels = c("c6i.8xl", "m6i.4xl", "c7a.8xl", "m7a.4xl", "c7g.8xl", "m7g.4xl"))
 
 ggplot(aggregated, aes(x=instance, y=time, fill=architecture, col=architecture)) +
   geom_col(position="dodge", width=0.75) +
