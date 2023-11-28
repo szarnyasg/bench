@@ -8,15 +8,20 @@ library(scales)
 library(duckdb)
 
 con <- dbConnect(duckdb())
-dbExecute(con, "CREATE TABLE result AS FROM '*.csv'")
-dbExecute(con, "CREATE TABLE aggregated AS SELECT instance, query, median(time) AS time FROM results GROUP BY ALL");
+dbExecute(con, "CREATE OR REPLACE TABLE results AS FROM 'results/*.csv'")
+dbExecute(con, "CREATE OR REPLACE TABLE aggregated AS
+  SELECT
+    replace(instance, 'large', 'l') AS instance,
+    CASE instance[3] WHEN 'i' THEN 'intel' WHEN 'a' THEN 'amd' WHEN 'g' THEN 'graviton' END AS architecture,
+    query,
+    median(time) AS time FROM results GROUP BY ALL");
 aggregated <- dbGetQuery(con, "FROM aggregated")
 
-ggplot(aggregated, aes(x=query, fill=instance, col=instance)) +
-  geom_col(aes(y=time, col=instance), position="dodge", width=0.75) +
-  scale_x_continuous(breaks=seq(1, 22)) +
-  xlab("Query") +
+ggplot(aggregated, aes(x=instance, y=time, fill=architecture, col=architecture)) +
+  geom_col(position="dodge", width=0.75) +
+  facet_wrap(~query, ncol=5, scales="free") +
   ylab("Execution time [s]") +
-  theme_bw()
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.5))
 
 ggsave("tpc-sf100-instances.pdf", width=10, height=6)
