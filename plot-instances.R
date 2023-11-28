@@ -27,4 +27,4 @@ ggplot(aggregated, aes(x=instance, y=time, fill=architecture, col=architecture))
   theme_bw() +
   theme(axis.text.x = element_text(angle = 45, vjust = 0.5))
 
-ggsave("tpc-sf100-instances.pdf", width=10, height=6)
+ggsave("tpc-sf100-instances.pdf", width=10, height=10)
