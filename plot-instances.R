@@ -18,17 +18,18 @@ dbExecute(con, "CREATE OR REPLACE TABLE aggregated AS
 aggregated <- dbGetQuery(con, "FROM aggregated")
 
 aggregated$instance <-
-  ordered(aggregated$instance, levels =
-            c("c6i.8xl", "m6i.4xl", "r6i.2xl",
-              "c7a.8xl", "m7a.4xl", "r7a.2xl",
-              "c7g.8xl", "m7g.4xl", "r7g.2xl"
-              ))
+  factor(aggregated$instance, levels =
+            c("c7a.8xl", "m7a.4xl", "r7a.2xl",
+              "c7g.8xl", "m7g.4xl", "r7g.2xl",
+              "c6i.8xl", "m6i.4xl", "r6i.2xl"
+              ), ordered=TRUE)
 
 ggplot(aggregated, aes(x=instance, y=time, fill=architecture, col=architecture)) +
   geom_col(position="dodge", width=0.75) +
-  facet_wrap(~query, ncol=5, scales="free") +
+  facet_wrap(~query, ncol=3, scales="free") +
   ylab("Execution time [s]") +
   theme_bw() +
-  theme(axis.text.x = element_text(angle = 45, vjust = 0.5))
+  theme(legend.position="top")
+  #theme(axis.text.x = element_text(angle = 50, vjust = 0.5))
 
-ggsave("tpc-sf100-instances.pdf", width=10, height=10)
+ggsave("tpc-sf100-instances.pdf", width=18, height=14)
