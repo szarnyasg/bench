@@ -14,7 +14,7 @@ dbExecute(con, "CREATE OR REPLACE TABLE aggregated AS
     replace(instance, 'large', 'l') AS instance,
     CASE instance[3] WHEN 'i' THEN 'intel' WHEN 'a' THEN 'amd' WHEN 'g' THEN 'graviton' END AS architecture,
     query,
-    median(time) AS time FROM results GROUP BY ALL");
+    min(time) AS time FROM results GROUP BY ALL");
 aggregated <- dbGetQuery(con, "FROM aggregated")
 
 aggregated$instance <-
