@@ -8,6 +8,7 @@ library(scales)
 library(duckdb)
 
 con <- dbConnect(duckdb("results.db"))
+#con <- dbConnect(duckdb())
 dbExecute(con, "CREATE OR REPLACE TABLE results AS FROM 'results/*.csv'")
 dbExecute(con, "CREATE OR REPLACE TABLE aggregated AS
   SELECT
