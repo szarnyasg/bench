@@ -20,7 +20,7 @@ aggregated <- dbGetQuery(con, "FROM aggregated")
 
 aggregated$instance <-
   factor(aggregated$instance, levels =
-            c("c7a.8xl", "m7a.4xl", "r7a.2xl",
+            c("c7a.8xl", "m7a.4xl", "r7a.2xl", "r7a.48xl",
               "c7g.8xl", "m7g.4xl", "r7g.2xl",
               "c6i.8xl", "m6i.4xl", "r6i.2xl"
               ), ordered=TRUE)
@@ -33,4 +33,4 @@ ggplot(aggregated, aes(x=instance, y=time, fill=architecture, col=architecture))
   theme(legend.position="top")
   #theme(axis.text.x = element_text(angle = 50, vjust = 0.5))
 
-ggsave("tpc-sf100-instances.pdf", width=18, height=14)
+ggsave("tpc-sf100-instances.pdf", width=18, height=18)
