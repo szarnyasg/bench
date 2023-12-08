@@ -6,6 +6,8 @@ Create an EC2 instance with the following disk settings:
 * type: gp3
 * IOPS: 3000
 
+Steps to run:
+
 1. Connect to the instance via SSH.
 2. Start a `tmux` session.
 3. Set the instance type, e.g.
