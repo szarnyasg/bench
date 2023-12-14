@@ -5,7 +5,6 @@ import sys
 def benchmark(instance, out):
     con = duckdb.connect("tpch-sf100.db")
     con.load_extension("tpch")
-    con.sql("CALL dbgen(sf = 100)")
 
     for query_nr in range(1, 23):
         res = con.sql(f"SELECT query FROM tpch_queries() WHERE query_nr = {query_nr}").fetchone()

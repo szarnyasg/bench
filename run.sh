@@ -25,5 +25,7 @@ echo "### Installing packages finished"
 
 pip3 install duckdb
 
+aws s3 cp s3://duckdb-blobs/data/tpch-sf100.db .
+
 python3 run.py ${1}
 cat out.csv
