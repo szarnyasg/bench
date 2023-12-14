@@ -7,15 +7,18 @@ def benchmark(instance, out):
     con.load_extension("tpch")
 
     for query_nr in range(1, 23):
+        print(f"- Query {query_nr}")
         res = con.sql(f"SELECT query FROM tpch_queries() WHERE query_nr = {query_nr}").fetchone()
         query = res[0]
 
         for i in range(1, 4):
             # run query
+            print(f"    - Iteration {i}")
             start = time.time()
             con.sql(f"CREATE OR REPLACE TEMP TABLE res AS {query}")
             duration = time.time() - start
             out.write(f"{instance},{query_nr},{duration}\n")
+            out.flush()
 
 
 if len(sys.argv) < 2:
