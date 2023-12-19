@@ -20,9 +20,10 @@ export DEBIAN_FRONTEND=noninteractive
 # removing the needrestart package to prevent service restart prompts during installation
 sudo apt purge -y needrestart
 sudo apt update
-sudo apt install -y tmux vim nmon bmon python3-pip zip silversearcher-ag parallel awscli s4cmd
+sudo apt install -y tmux vim nmon bmon python3-pip zip silversearcher-ag parallel awscli s4cmd git g++ cmake ninja-build fzf
 echo "### Installing packages finished"
 
+pip3 install pybind11
 pip3 install duckdb
 
 aws s3 cp s3://duckdb-blobs/data/tpch-sf100.db .
